@@ -1,10 +1,12 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-function AddTodo({updatelist}){
+import { useContext, useState } from "react";
+import TodoDispatchContext from "../../context/TodoDispatchContext";
+function AddTodo(){
 
-    const [inputText,setinputText]=useState('');
+    const [inputText,setInputText]=useState('');
 
-
+const {dispatch}=useContext(TodoDispatchContext);
 
 return(
     <div>
@@ -13,10 +15,13 @@ return(
  type="text"
  value={inputText}
  placeholder="add your next todo"
- onChange={e=>setinputText(e.target.value)}
+ onChange={e=>setInputText(e.target.value)}
  
  />
- <button onClick={()=>updatelist(inputText)}>Add</button>
+ <button onClick={()=>{
+dispatch({type:'add_todo',payload:{todoText:inputText}})
+setInputText('');
+ }}>Add</button>
      </div>
 )
 
