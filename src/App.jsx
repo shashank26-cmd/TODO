@@ -1,21 +1,21 @@
 /* eslint-disable no-unused-vars */
-import React, { useReducer } from "react";
+import { useDispatch } from "react-redux";
 import AddTodo from "./components/AddTodo/AddTodo.jsx";
 import TodoList from "./components/TodoList/TodoList.jsx";
-import TodoContext from "./context/TodoContext.js";
-import todoReducer from "./reducers/todoReducer.js";
-import TodoDispatchContext from "./context/TodoDispatchContext.js";
-
+import { bindActionCreators } from "redux";
+import todoReducer,{addTodo,editTodo,deleteTodo,todoFinished } from './slices/todoSlice.js'
 function App() {
-  const [list, dispatch] = useReducer(todoReducer, []);
+
+const dispatch=useDispatch();
+const actions=bindActionCreators({addTodo,editTodo,deleteTodo,todoFinished},dispatch)
 
   return (
-    <TodoContext.Provider value={{ list }}>
-      <TodoDispatchContext.Provider value={{ dispatch }}>
-        <AddTodo />
-        <TodoList />
-      </TodoDispatchContext.Provider>
-    </TodoContext.Provider>
+<>
+        <AddTodo addTodo={actions.addTodo} />
+        <TodoList deleteTodo={actions.deleteTodo} editTodo={actions.editTodo} todoFinished={actions.todoFinished} />
+    
+</>
+       
   );
 }
 

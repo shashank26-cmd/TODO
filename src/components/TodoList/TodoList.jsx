@@ -1,25 +1,21 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
+import { useSelector } from "react-redux";
 import Todo from "../Todo/Todo ";
-import TodoContext from "../../context/TodoContext";
-import { useContext } from "react";
-import TodoDispatchContext from "../../context/TodoDispatchContext";
-function TodoList(){
-const{list}=useContext(TodoContext)
-const {dispatch}=useContext(TodoDispatchContext)
+
+function TodoList({deleteTodo,editTodo,todoFinished}){
+
+const list=useSelector((state)=>state.todo.todoList); //joh present hai store mai woh pass karnege idhar
 
 function onFinished(todo,isFinished){
- 
-    dispatch({type:'finish_todo',payload:{todo,isFinished}});
+ todoFinished({todo,isFinished});
 }
 function onDelete(todo){
-dispatch({type:'delete_todo', payload:{todo}})
-
+deleteTodo({todo});
 }
  function onEdit(todo,todoText){
-    dispatch({type:'edit_todo',payload:{todo,todoText}})
-
+editTodo({todo,todoText});
 
  }
 
